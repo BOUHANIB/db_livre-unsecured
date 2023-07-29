@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Livre</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+</head>
+<body>
+<nav class="p-3">
+    <nav class="container">
+        <div class="card">
+            <form method="post" th:action="@{saveLivre(page=${page},keyword=${keyword})}">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="card-title mt-3 text-center">
+                            Editer un livre :
+                        </h4>
+                        <a th:href="@{/listLivres}" class="btn btn-outline-primary ml-auto">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Liste des livres
+                        </a>
+                    </div>
+
+                    <i>ID :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input id="id" class="form-control" type="hidden" name="livreId" th:value="${livre.livreId}">
+                        <input class="form-control" type="text" value="" th:value="${livre.livreId}" readonly>
+                    </div>
+
+
+                    <i>Titre : (*) Ce champ ne doit pas être vide</i> <span class="text-danger" th:errors="${livre.titre}"></span>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                        </div>
+                        <input id="titre" class="form-control" type="text" name="titre" th:value="${livre.titre}">
+                    </div>
+
+                    <i>Auteur :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-map"></i> </span>
+                        </div>
+                        <input id="auteur" class="form-control" type="text" name="auteur" th:value="${livre.auteur}">
+                        <span class="text-danger" th:errors="${livre.auteur}"></span>
+                    </div>
+
+                    <i>Editeur :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                        </div>
+                        <input id="editeur" class="form-control" type="text" name="editeur" th:value="${livre.editeur}">
+                        <span class="text-danger" th:errors="${livre.editeur}"></span>
+                    </div>
+
+                    <i>Date edition :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                        </div>
+                        <input id="dateEdition"  class="form-control" type="date" name="dateEdition" th:value="${livre.dateEdition}">
+                        <span class="text-danger" th:errors="${livre.dateEdition}"></span>
+                    </div>
+
+                    <i>Prix :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-globe"></i> </span>
+                        </div>
+                        <input id="prix"  class="form-control" type="number" name="prix" th:value="${livre.prix}">
+                        <span class="text-danger" th:errors="${livre.prix}"></span>
+                    </div>
+
+                    <i>Isbn :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-home"></i> </span>
+                        </div>
+                        <input  id="isbn" class="form-control" type="text" name="isbn" th:value="${livre.isbn}">
+                        <span class="text-danger" th:errors="${livre.isbn}"></span>
+                    </div>
+
+                    <i>Exposant :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <select class="form-control" name="exposant.exposantId" th:value="${livre.exposant.exposantId}">
+                            <option th:each="exposant : ${listExposants}"
+                                    th:value="${exposant.exposantId}"
+                                    th:text="${exposant.nom}"
+                                    th:selected="${livre.exposant != null && livre.exposant.exposantId == exposant.exposantId}"></option>
+                        </select>
+                        <span class="text-danger" th:errors="${livre.exposant.exposantId}"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button id="saveButton" class="btn btn-outline-success" type="submit" disabled>
+                            Update
+                        </button>
+                    </div>
+
+                    <script>
+                        // Enable the "Save" button when the "Titre" field has valid value
+                        const titreInput = document.querySelector('[name="titre"]');
+                        const saveButton = document.getElementById('saveButton');
+
+                        // Check the input value initially and disable/enable the button accordingly
+                        toggleSaveButtonState();
+
+                        titreInput.addEventListener('input', toggleSaveButtonState);
+
+                        function toggleSaveButtonState() {
+                            if (titreInput.value.trim() !== "") {
+                                saveButton.removeAttribute('disabled');
+                            } else {
+                                saveButton.setAttribute('disabled', 'disabled');
+                            }
+                        }
+                    </script>
+
+                </div>
+            </form>
+        </div>
+    </nav>
+</nav>
+
+</body>
+</html>

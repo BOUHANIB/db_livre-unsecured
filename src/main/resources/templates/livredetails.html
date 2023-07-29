@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Livre Details</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+</head>
+<body>
+<nav class="p-3">
+    <nav class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="card-title mt-3 text-center">
+                        LivreDetails :
+                    </h4>
+                    <a th:href="@{/listLivres}" class="btn btn-outline-primary ml-auto">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Liste des livres
+                    </a>
+                </div>
+
+                <i>ID :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                    </div>
+                    <span class="form-control" th:text="${livre.livreId}"></span>
+                </div>
+
+                <i>Titre :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                    </div>
+                    <span class="form-control" th:unless="${livre.titre}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${livre.titre}" th:text="${livre.titre}"></span>
+                </div>
+
+                <i>Auteur :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                    </div>
+                    <span class="form-control" th:if="${livre.auteur == null or livre.auteur == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${livre.auteur != null and livre.auteur != ''}" th:text="${livre.auteur}"></span>
+                </div>
+
+                <i>Editeur :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                    </div>
+                    <span class="form-control" th:if="${livre.editeur == null or livre.editeur == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${livre.editeur != null and livre.editeur != ''}" th:text="${livre.editeur}"></span>
+                </div>
+
+                <i>Date edition :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                    </div>
+                    <span class="form-control" th:if="${livre.dateEdition == null or livre.dateEdition == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${livre.dateEdition != null and livre.dateEdition != ''}" th:text="${livre.dateEdition}"></span>
+                </div>
+
+                <i>Prix :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                    </div>
+                    <span class="form-control" th:if="${livre.prix == null or livre.prix == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${livre.prix != null and livre.prix != ''}" th:text="${livre.prix}"></span>
+                </div>
+
+                <i>Isbn :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                    </div>
+                    <span class="form-control" th:if="${livre.isbn == null or livre.isbn == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${livre.isbn != null and livre.isbn != ''}" th:text="${livre.isbn}"></span>
+                </div>
+
+                <i>Exposant :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-street-view" aria-hidden="true"></i> </span>
+                    </div>
+                    <span class="form-control" th:unless="${livre.exposant}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${livre.exposant}" th:text="${livre.exposant.nom}"></span>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</nav>
+
+</body>
+</html>

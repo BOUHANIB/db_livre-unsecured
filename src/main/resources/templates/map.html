@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Map</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+    <nav class="p-3">
+        <nav class="container">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="card-body d-flex justify-content-center align-items-center mb-3">
+                            <div class="input-group">
+                                <button type="button" onclick="searchEmplacement()" class="btn btn-secondary">
+                                    <i class="fa fa-search"></i></button>
+                                <input class="form-control" id="searchInput" type="text" placeholder="Enter a location" onkeypress="handleKeyPress(event)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="position-relative">
+                        <img th:src="@{/Map.png}" alt="Workplace" usemap="#workmap" style="margin-left: 0;">
+                        <map name="image-map">
+                            <area target="" alt="A11" title="A11" href="A11" coords="530,126" shape="poly">
+                            <area target="" alt="A22" title="A22" href="A22" coords="482,173" shape="poly">
+                            <area target="" alt="B11" title="B11" href="B11" coords="180,44" shape="poly">
+                            <area target="" alt="B22" title="B22" href="B22" coords="77,167" shape="poly">
+                            <area target="" alt="C11" title="C11" href="C11" coords="158,366" shape="poly">
+                            <area target="" alt="C22" title="C22" href="C22" coords="62,448" shape="poly">
+                            <area target="" alt="D11" title="D11" href="D11" coords="285,379" shape="poly">
+                            <area target="" alt="D22" title="D22" href="D22" coords="366,453" shape="poly">
+                            <area target="" alt="E11" title="E11" href="E11" coords="513,371" shape="poly">
+                            <area target="" alt="E22" title="E22" href="E22" coords="410,322" shape="poly">
+                        </map>
+                        <div id="locationMarker" class="location-marker"></div>
+                    </div>
+
+                    <style>
+                        .location-marker {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            transform: translate(-50%, -100%);
+                            font-size: 24px;
+                            color: red;
+                        }
+                    </style>
+
+
+                    <script>
+                        function searchEmplacement() {
+                            var emplacement = document.getElementById("searchInput").value.toLowerCase();
+                            var areaElements = document.querySelectorAll('area');
+                            var matchedArea = null;
+                            var marker = document.getElementById("locationMarker");
+
+                            // Loop through all the area elements and find a match
+                            areaElements.forEach(function (areaElement) {
+                                if (areaElement.alt.toLowerCase() === emplacement) {
+                                    matchedArea = areaElement;
+                                    return; // Exit the loop early if a match is found
+                                }
+                            });
+
+                            if (matchedArea) {
+                                // Calculate the position of the location marker relative to the image
+                                var coords = matchedArea.coords.split(',');
+                                var x = parseInt(coords[0]);
+                                var y = parseInt(coords[1]);
+
+                                // Set the marker content to the map marker icon
+                                marker.innerHTML = '<i class="fa fa-map-marker" aria-hidden="true"></i>';
+                                // Position the marker
+                                marker.style.left = x + "px";
+                                marker.style.top = y + "px";
+                            } else {
+                                // Hide the marker if the emplacement is not found
+                                marker.innerHTML = '';
+                            }
+                        }
+
+                        // Function to handle Enter key press inside the input field
+                        function handleKeyPress(event) {
+                            if (event.keyCode === 13) {
+                                searchEmplacement();
+                            }
+                        }
+                    </script>
+
+                </div>
+            </div>
+        </nav>
+    </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exposant Details</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+</head>
+<body>
+<nav class="p-3">
+    <nav class="container">
+        <div class="card">
+            <form method="post" th:action="@{saveExposant}">
+            <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+                 <h4 class="card-title mt-3 text-center">
+                        Ajouter un exposant :
+                    </h4>
+                <a th:href="@{/listExposants}" class="btn btn-outline-primary ml-auto">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Liste des exposants
+                </a>
+        </div>
+
+                <i>Nom : (*) Ce champ est obligatoire</i> <span class="text-danger" th:errors="${exposant.nom}"></span>
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                </div>
+                <input class="form-control" type="text" name="nom" th:value="${exposant.nom}">
+            </div>
+
+                <i>Pays :</i>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-map"></i> </span>
+                </div>
+                <input class="form-control" type="text" name="pays" th:value="${exposant.pays}">
+                <span class="text-danger" th:errors="${exposant.pays}"></span>
+            </div>
+
+                <i>E-mail :</i>
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                </div>
+                    <input class="form-control" type="email" name="mail" th:value="${exposant.mail}">
+                    <span class="text-danger" th:errors="${exposant.mail}"></span>
+            </div>
+
+                <i>Telephone :</i>
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                </div>
+                    <input class="form-control" type="number" name="telephone" th:value="${exposant.telephone}">
+                    <span class="text-danger" th:errors="${exposant.telephone}"></span>
+            </div>
+
+                <i>Site Web:</i>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-globe"></i> </span>
+                </div>
+                <input class="form-control" type="text" name="siteWeb" th:value="${exposant.siteWeb}">
+                <span class="text-danger" th:errors="${exposant.siteWeb}"></span>
+            </div>
+
+                <i>Adresse :</i>
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-home"></i> </span>
+                </div>
+                    <input class="form-control" type="text" name="adresse" th:value="${exposant.adresse}">
+                    <span class="text-danger" th:errors="${exposant.adresse}"></span>
+            </div>
+
+                <i>Responsable Salle:</i>
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-street-view" aria-hidden="true"></i> </span>
+                </div>
+                    <input class="form-control" type="text" name="responsableSalle" th:value="${exposant.responsableSalle}">
+                    <span class="text-danger" th:errors="${exposant.responsableSalle}"></span>
+            </div>
+
+                <i>Responsable :</i>
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                    <input class="form-control" type="text" name="responsable" th:value="${exposant.responsable}">
+                    <span class="text-danger" th:errors="${exposant.responsable}"></span>
+            </div>
+
+                <i>Specialite :</i>
+
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-bars"></i> </span>
+                </div>
+                    <input class="form-control" type="text" name="specialite" th:value="${exposant.specialite}">
+                    <span class="text-danger" th:errors="${exposant.specialite}"></span>
+            </div>
+
+                <i>Localisation :</i>
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
+                </div>
+                    <input class="form-control" type="text" name="localisation" th:value="${exposant.localisation}">
+                    <span class="text-danger" th:errors="${exposant.localisation}"></span>
+            </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button class="btn btn-outline-success" type="submit">Save</button>
+                    </a>
+                </div>
+            </div>
+            </form>
+        </div>
+    </nav>
+</nav>
+
+</body>
+</html>

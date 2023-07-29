@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Livres</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+<nav class="p-3">
+    <nav class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3>Liste des livres :</h3>
+                    </div>
+
+                    <a th:href="@{/formLivres}" class="btn btn-outline-primary ml-auto">
+                        <i class="fa fa-plus"></i>New Livre
+                    </a>
+
+                </div>
+                <form method="get" th:action="@{listLivres}">
+                    <div class="d-flex align-items-center">
+                        <div class="card-body d-flex justify-content-center align-items-center">
+                            <div class="input-group">
+                                <button type="submit" class="btn btn-secondary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <input class="form-control" type="text" name="keyword" th:value="${keyword}"
+                                       placeholder="Chercher un livre">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Titre</th>
+                            <th>Auteur</th>
+                            <th>Editeur</th>
+                            <th>Exposant</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="livre:${listLivres}">
+                            <td th:text="${livre.livreId}"></td>
+                            <td>
+                                <span th:if="${livre.titre} != null" th:text="${livre.titre}"></span>
+                                <span th:unless="${livre.titre}">Indisponible</span>
+                            </td>
+                            <td>
+                                <span th:if="${livre.auteur} != null" th:text="${livre.auteur}"></span>
+                                <span th:unless="${livre.auteur}">Indisponible</span>
+                            </td>
+                            <td>
+                                <span th:if="${livre.editeur} != null" th:text="${livre.editeur}"></span>
+                                <span th:unless="${livre.editeur}">Indisponible</span>
+                            </td>
+                            <td>
+                                <span th:if="${livre.exposant != null}" th:text="${livre.exposant.nom}"></span>
+                                <span th:unless="${livre.exposant}">Indisponible</span>
+                            </td>
+                            <td style="text-align: center;">
+                                <a th:href="@{/livredetails(id=${livre.livreId})}" class="btn btn-outline-warning">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                                <a th:href="@{/editLivre(id=${livre.livreId}, keyword=${keyword}, page=${currentPage})}" class="btn btn-outline-secondary">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a onclick="return confirm('Etes vous sûre?')" class="btn btn-outline-danger"
+                                   th:href="@{deleteLivre(id=${livre.livreId}, keyword=${keyword}, page=${currentPage})}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ul class="nav nav-pills d-flex justify-content-center">
+                    <li th:each="page,status:${pages}">
+                        <a
+                                th:class="${status.index==currentPage?'btn btn-info ms-1':'btn btn-outline-info ms-1'}"
+                                th:text="${status.index}"
+                                th:href="@{listLivres(page=${status.index}, keyword=${keyword})}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</nav>
+</div>
+</body>
+</html>

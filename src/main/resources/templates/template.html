@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exposant</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Ajouter la classe pour centrer l'icône */
+        .icon-container {
+            display: flex;
+            justify-content: center; /* Centrer horizontalement */
+            align-items: center; /* Centrer verticalement */
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-teal" style="display:none" id="mySidebar">
+    <br>
+    <div class="icon-container">
+        <i class="fa fa-user-circle-o fa-5x"></i>
+    </div>
+    <hr>
+    <a th:href="@{/listExposants}" class="w3-bar-item w3-button"><i class="fa fa-building fa-2x"></i> Expoasnts</a>
+    <hr>
+    <a th:href="@{/listLivres}" class="w3-bar-item w3-button"><i class="fa fa-book fa-2x" aria-hidden="true"></i> Livres</a>
+    <hr>
+    <a th:href="@{/map}" class="w3-bar-item w3-button"><i class="fa fa-book fa-2x" aria-hidden="true"></i> Carte</a>
+    <hr>
+</div>
+
+<div id="main">
+    <div class="w3-teal" style="display: flex; align-items: center;">
+        <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
+        <div class="w3-container" style="flex: 1; text-align: center;">
+            <h1>SIEL</h1>
+        </div>
+    </div>
+
+    <div layout:fragment="content">
+
+    </div>
+</div>
+
+<script>
+    function w3_open() {
+        document.getElementById("main").style.marginLeft = "20%";
+        document.getElementById("mySidebar").style.width = "20%";
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("openNav").style.display = 'none';
+        document.addEventListener('click', closeSidebarOnClickOutside);
+    }
+
+    function w3_close() {
+        document.getElementById("main").style.marginLeft = "0%";
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openNav").style.display = "inline-block";
+        document.removeEventListener('click', closeSidebarOnClickOutside);
+    }
+
+    function closeSidebarOnClickOutside(event) {
+        var sidebar = document.getElementById("mySidebar");
+        var openNavButton = document.getElementById("openNav");
+
+        if (!sidebar.contains(event.target) && event.target !== openNavButton) {
+            w3_close();
+        }
+    }
+
+
+</script>
+
+</body>
+</html>
