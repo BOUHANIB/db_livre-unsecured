@@ -2,7 +2,7 @@ package ma.emsi.db_livre.web;
 
 import jakarta.validation.Valid;
 import ma.emsi.db_livre.entities.Exposant;
-import ma.emsi.db_livre.entities.Livre;
+import ma.emsi.db_livre.entities.User;
 import ma.emsi.db_livre.repositories.ExposantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,21 +31,32 @@ public class ExposantController {
         Page<Exposant> pageExposants = exposantRepository.findByNomContains(keyword, PageRequest.of(page, size));
         List<Exposant> exposants = pageExposants.getContent();
 
-        // Pour chaque livre, vérifier les champs et attribuer "Indisponible" si nécessaire
         for (Exposant exposant : exposants) {
-            if (exposant.getNom() == null || exposant.getNom().isEmpty()) {
-                exposant.setNom("Indisponible");
-            }
+
             if (exposant.getPays() == null || exposant.getPays().isEmpty()) {
                 exposant.setPays("Indisponible");
             }
-            if (exposant.getMail() == null || exposant.getMail().isEmpty()) {
-                exposant.setMail("Indisponible");
+            if (exposant.getTelephone() == null || exposant.getTelephone().isEmpty()) {
+                exposant.setTelephone("Indisponible");
+            }
+            if (exposant.getSiteWeb() == null || exposant.getSiteWeb().isEmpty()) {
+                exposant.setSiteWeb("Indisponible");
+            }
+            if (exposant.getAdresse() == null || exposant.getAdresse().isEmpty()) {
+                exposant.setAdresse("Indisponible");
+            }
+            if (exposant.getResponsableSalle() == null || exposant.getResponsableSalle().isEmpty()) {
+                exposant.setResponsableSalle("Indisponible");
+            }
+            if (exposant.getResponsable() == null || exposant.getResponsable().isEmpty()) {
+                exposant.setResponsable("Indisponible");
             }
             if (exposant.getSpecialite() == null || exposant.getSpecialite().isEmpty()) {
                 exposant.setSpecialite("Indisponible");
             }
-            // Vous pouvez faire de même pour les autres champs si nécessaire
+            if (exposant.getLocalisation() == null || exposant.getLocalisation().isEmpty()) {
+                exposant.setLocalisation("Indisponible");
+            }
         }
 
         model.addAttribute("listExposants", exposants);
@@ -60,28 +72,22 @@ public class ExposantController {
         return "redirect:/listExposants?page="+page+"&keyword="+keyword;
     }
 
-    @GetMapping("/")
-    public String home(){
-        return "redirect:/listExposants";
-    }
-
-    @GetMapping("/exposantdetails")
-    public String exposantDetails(@RequestParam(name = "id") Long id, Model model) {
+    @GetMapping("/exposantdetails/{id}")
+    public String exposantDetails(@PathVariable(name = "id") Long id, Model model) {
         // Récupérer l'exposant à partir de l'id
         Exposant exposant = exposantRepository.findById(id).orElse(null);
 
-        // Vérifier si l'exposant a été trouvé
-        if (exposant == null) {
-            // Si l'exposant n'a pas été trouvé, vous pouvez gérer cela ici, par exemple, rediriger vers une page d'erreur.
-            return "redirect:/listExposants"; // Remplacez "/error" par le chemin de votre page d'erreur personnalisée
-        }
+        // Récupérer l'utilisateur associé à l'exposant (si vous avez une relation entre User et Exposant)
+        User user = exposant.getUser();
 
-        // Ajouter l'exposant au modèle pour l'afficher dans la page "exposantdetails.html"
+        // Ajouter l'exposant et l'utilisateur au modèle pour les afficher dans la page "exposantdetails.html"
         model.addAttribute("exposant", exposant);
+        model.addAttribute("user", user);
 
         // Rediriger vers la page "exposantdetails.html"
         return "exposantdetails";
     }
+
 
     @GetMapping("/formExposants")
     public String formExposant(Model model ){
@@ -91,20 +97,65 @@ public class ExposantController {
 
     @PostMapping("/saveExposant")
     public String saveExposant(Model model, @Valid Exposant exposant, BindingResult bindingResult,
-                               @RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "") String keyword){
-        if (bindingResult.hasErrors()) return "formExposants";
-        exposantRepository.save(exposant);
-        return "redirect:/listExposants?page="+page+"&keyword="+keyword;
+                               @RequestParam(defaultValue = "0") String page,
+                               @RequestParam(defaultValue = "") String keyword,
+                               @RequestParam(name = "newUsername", required = false) String newUsername) {
+
+        if (bindingResult.hasErrors()) {
+            return "formExposants";
+        }
+
+        // Fetch the existing Exposant from the database
+        Exposant existingExposant = exposantRepository.findById(exposant.getExposantId()).orElse(null);
+        if (existingExposant == null) {
+            throw new RuntimeException("Exposant not found");
+        }
+
+        // Check if newUsername is provided and not empty
+        if (newUsername != null && !newUsername.trim().isEmpty()) {
+            // Set the new username in the associated User entity (if exists)
+            User user = existingExposant.getUser();
+            if (user != null) {
+                user.setUsername(newUsername.trim());
+            }
+        }
+
+        // Update the fields of the existing Exposant with the new values
+        existingExposant.setNom(exposant.getNom());
+        existingExposant.setPays(exposant.getPays().isEmpty() ? null : exposant.getPays());
+        existingExposant.setTelephone(exposant.getTelephone().isEmpty() ? null : exposant.getTelephone());
+        existingExposant.setSiteWeb(exposant.getSiteWeb().isEmpty() ? null : exposant.getSiteWeb());
+        existingExposant.setAdresse(exposant.getAdresse().isEmpty() ? null : exposant.getAdresse());
+        existingExposant.setResponsableSalle(exposant.getResponsableSalle().isEmpty() ? null : exposant.getResponsableSalle());
+        existingExposant.setResponsable(exposant.getResponsable().isEmpty() ? null : exposant.getResponsable());
+        existingExposant.setSpecialite(exposant.getSpecialite().isEmpty() ? null : exposant.getSpecialite());
+        existingExposant.setLocalisation(exposant.getLocalisation().isEmpty() ? null : exposant.getLocalisation());
+        // Update other fields as needed...
+
+        // Save the updated Exposant (including the User relationship) to the database
+        exposantRepository.save(existingExposant);
+
+        // Convert the page number from String to int
+        int pageNumber = Integer.parseInt(page);
+
+        // Redirect to the dashboard page after saving the changes
+        return "redirect:/dashboard";
     }
 
+
     @GetMapping("/editExposant")
-    public String editExposant(Long id, Model model,String keyword,int page){
-        Exposant exposant=exposantRepository.findById(id).orElse(null);
-        if(exposant==null) throw new RuntimeException("Exposant introuvable");
-        model.addAttribute("exposant",exposant);
-        model.addAttribute("page",page);
-        model.addAttribute("keyword",keyword);
+    public String editExposant(Long id, Model model, String keyword, String page){ // Modifier le type en String
+        Exposant exposant = exposantRepository.findById(id).orElse(null);
+        if (exposant == null) throw new RuntimeException("Exposant introuvable");
+
+        String currentUsername = exposant.getUser() != null ? exposant.getUser().getUsername() : "";
+
+        model.addAttribute("exposant", exposant);
+        model.addAttribute("page", page);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("currentUsername", currentUsername); // Add the current username to the model
+
+
         return "editExposant";
     }
 

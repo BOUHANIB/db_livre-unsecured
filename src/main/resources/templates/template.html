@@ -6,23 +6,30 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
     <style>
-        /* Ajouter la classe pour centrer l'icône */
         .icon-container {
             display: flex;
-            justify-content: center; /* Centrer horizontalement */
-            align-items: center; /* Centrer verticalement */
+            justify-content: center;
+            align-items: center;
         }
-
 
     </style>
 </head>
-<body>
 
+<body>
 <div class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-teal" style="display:none" id="mySidebar">
     <br>
+
     <div class="icon-container">
         <i class="fa fa-user-circle-o fa-5x"></i>
     </div>
+    <hr>
+    <a class="w3-bar-item w3-button" href="/home"><i class="fa fa-building fa-2x"></i>Home</a>
+    <hr>
+
+    <div th:if="${isLoggedIn == true}">
+        <a class="w3-bar-item w3-button" href="/dashboard"><i class="fa fa-building fa-2x"></i>Dashboard</a>
+    </div>
+    <br>
     <hr>
     <a th:href="@{/listExposants}" class="w3-bar-item w3-button"><i class="fa fa-building fa-2x"></i> Expoasnts</a>
     <hr>
@@ -30,6 +37,19 @@
     <hr>
     <a th:href="@{/map}" class="w3-bar-item w3-button"><i class="fa fa-book fa-2x" aria-hidden="true"></i> Carte</a>
     <hr>
+    <div th:if="${isLoggedIn != true}">
+        <a class="w3-bar-item w3-button" href="/register"><i class="fa fa-building fa-2x"></i>Register</a>
+    </div>
+    <hr>
+    <div th:if="${isLoggedIn != true}">
+        <a class="w3-bar-item w3-button" href="/login"><i class="fa fa-building fa-2x"></i>Login</a>
+    </div>
+    <hr>
+    <div th:if="${isLoggedIn == true}">
+        <a class="w3-bar-item w3-button" href="/confirm_logout"><i class="fa fa-building fa-2x"></i>Logout</a>
+    </div>
+    <hr>
+
 </div>
 
 <div id="main">

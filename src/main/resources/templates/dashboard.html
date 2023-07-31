@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link crossorigin="anonymous"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+  <link rel="stylesheet"/>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <title>Register</title>
+</head>
+<body>
+<div layout:fragment="content">
+     <nav class="p-3">
+            <nav class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <h3>Mes informations :</h3>
+                            </div>
+
+                            <a th:href="@{/formLivres}" class="btn btn-outline-primary ml-auto">
+                                <i class="fa fa-plus"></i> Ajouter un livre
+                            </a>
+                        </div>
+
+                        <br>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                                    <th>ID</th>
+                                    </a>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Pays</th>
+                                    <th>Spécialité</th>
+                                    <th>Localisation</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                                        <th>ID</th>
+                                    </a>
+                                    <td th:text="${user.username}"></td>
+                                    <td th:text="${user.email}"></td>
+
+                                    <td>
+                                        <span th:if="${user.exposant.pays} != null" th:text="${user.exposant.pays}"></span>
+                                        <span th:unless="${user.exposant.pays}">Indisponible</span>
+                                    </td>
+
+                                    <td>
+                                        <span th:if="${user.exposant.specialite} != null" th:text="${user.exposant.specialite}"></span>
+                                        <span th:unless="${user.exposant.specialite}">Indisponible</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${user.exposant.localisation} != null" th:text="${user.exposant.localisation}"></span>
+                                        <span th:unless="${user.exposant.localisation}">Indisponible</span>
+                                    </td>
+
+                                    <td style="text-align: center;">
+
+                                        <a th:href="@{/exposantdetails/{id}(id=${user.userId})}" class="btn btn-outline-warning">
+                                            <i class="fa fa-bars"></i>
+                                        </a>
+
+                                        <a th:href="@{/editExposant(id=${user.userId}, keyword=${keyword}, page=${currentPage})}" class="btn btn-outline-secondary">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </nav>
+    </div>
+
+<div class="container-fluid dash-background">
+  <div class="container d-flex justify-content-center" id="centre">
+    <div class="shadow-inner">
+
+      <div th:if="${isAdmin == true}">
+        <ul>
+          <li th:each="authority : ${user.authorities}" th:text="${authority.authority}"></li>
+        </ul>
+      </div>
+      <hr>
+      </div>
+    </div>
+  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

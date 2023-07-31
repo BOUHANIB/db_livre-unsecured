@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link crossorigin="anonymous"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+  <link rel="stylesheet"/>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <title>Logout</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+  <div class="container-fluid background">
+    <div class="container d-flex justify-content-center" id="centre">
+      <div class="row shadow-inner">
+        <h1 style="text-align: center">Are you sure?</h1>
+        <form action="" method="POST">
+          <div class="form-group">
+        <div class="row">
+          <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+          <button class="btn btn-success" type="submit">Confirm Logout</button>
+        </div>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+
+</body>
+</html>

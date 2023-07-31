@@ -18,7 +18,6 @@ import java.util.Set;
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long exposantId;
-        @NotEmpty
         private String nom;
         private String pays;
         private String mail;
@@ -33,6 +32,10 @@ import java.util.Set;
 
         @OneToMany(mappedBy = "exposant" , fetch = FetchType.LAZY , cascade = CascadeType.ALL)
         private Set<Livre> livre;
+
+        @OneToOne
+        @JoinColumn(name = "user_id")
+        private User user;
 
     }
 

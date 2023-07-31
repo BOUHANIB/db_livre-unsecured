@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link crossorigin="anonymous"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+  <link rel="stylesheet"/>
+  <title>Admin</title>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark bg-black">
+    <div class="container-fluid nav">
+      <button aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"
+              class="navbar-toggler"
+              data-bs-target="#navbarNavAltMarkup" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav mx-auto">
+
+          <a class="nav-item nav-link" href="/home">Home</a>
+          <div th:if="${isAdmin == true}">
+            <a class="nav-item nav-link active" href="/admin">Admin</a>
+          </div>
+          <div th:if="${isLoggedIn == true}">
+            <a class="nav-item nav-link" href="/dashboard">Dashboard</a>
+          </div>
+          <div th:if="${isLoggedIn != true}">
+            <a class="nav-item nav-link" href="/register">Register</a>
+          </div>
+          <div th:if="${isLoggedIn != true}">
+            <a class="nav-item nav-link" href="/login">Login</a>
+          </div>
+          <div th:if="${isLoggedIn == true}">
+            <a class="nav-item nav-link" href="/confirm_logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="container-fluid dash-background">
+  <div class="container" id="centre">
+    <div class="container" id="email">
+      <table class="table caption-top league-table">
+        <caption><h3>Admin Controls:</h3></caption>
+        <th>Email Type</th>
+        <th>Email Address</th>
+        <th>API</th>
+        <tr>
+          <form action="" method="POST" th:action="@{/sendEmail}" modelAttribute="emailType, emailAddress">
+            <td>
+              <div>
+                <label for="emailType">Choose an email type:</label>
+              </div>
+              <div>
+                <select name="emailType" id="emailType">
+                  <option value="1">1: Send Custom Email</option>
+                  <option value="2">2: Send Email Template</option>
+                  <option value="3">3: Send Custom Html Email</option>
+                  <option value="4">4: Send HTML Email Template</option>
+                </select>
+              </div>
+            </td>
+            <td>
+              <div>
+                <label for="emailAddress">Enter Recipient Address: </label>
+              </div>
+              <div>
+                <input type="email" name="emailAddress" id="emailAddress">
+              </div>
+              <div style="padding: 3px">
+                <button type="submit" class="btn btn-danger navbar-btn">Send Email</button>
+              </div>
+            </td>
+          </form>
+          <td>
+            <div style="padding: 3px">
+              <form action="" method="POST" th:action="@{/admin/addDrivers}">
+                <button class="btn btn-danger navbar-btn">Add Drivers</button>
+              </form>
+            </div>
+            <div style="padding: 3px">
+              <form action="" method="POST" th:action="@{admin/updateDrivers}">
+                <button class="btn btn-danger navbar-btn">Update Drivers</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <table class="table caption-top league-table">
+      <caption><h3>All Users:</h3></caption>
+      <th style="width: 4em">ID</th>
+      <th>User</th>
+      <th>Email</th>
+      <!--      <th>League</th>-->
+      <th>Team</th>
+      <th style="width: 5em">Points</th>
+      <th>Drivers</th>
+      <th style="width: 5em">Active</th>
+      <th>Last Logout</th>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.email}"></td>
+        <!--        <td th:text="${user.team != null} ? ${user.team.league.leagueName}: 'No Team'"></td>-->
+        <td th:text="${user.team != null} ? ${user.team.teamName}: 'No Team'"></td>
+        <td th:text="${user.team != null} ? ${user.team.teamPoints}: 'N/A'"></td>
+        <td th:text="${user.team != null} ? ${user.team.drivers}: 'No Team'"></td>
+        <td th:text="${activeUsers.contains(user.username)} ? 'Yes' : 'No'"></td>
+        <td th:text="${user.lastLogout}"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <table class="table caption-top league-table">
+          <caption><h3>Created Leagues</h3></caption>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Teams</th>
+          <th>Created</th>
+          <th>Activated</th>
+          <tr th:each="league : ${leagues}">
+            <td th:text="${league.leagueId}"></td>
+            <td th:text="${league.leagueName}"></td>
+            <td th:text="${league.teams.size()}"></td>
+            <td th:text="${league.creationTimestamp}"></td>
+            <td th:text="${league.activeTimestamp}"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-sm-6">
+        <table class="table caption-top league-table">
+          <caption><h3>Current Driver Standings</h3></caption>
+          <th>Rank:</th>
+          <th>Points:</th>
+          <th>Name:</th>
+          <tr th:each="driver : ${allDrivers}">
+            <td>[[${driver.standing}]]</td>
+            <td>[[${driver.points.intValue()}]]</td>
+            <td>[[${driver.surname}]]</td>
+          </tr>
+        </table>
+        <h6 style="font-size: small; margin-left: 1em">
+          *Note: Ricciardo replaced de Vries on July 11th 2023
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

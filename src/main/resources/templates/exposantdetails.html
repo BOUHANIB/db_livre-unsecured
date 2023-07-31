@@ -19,34 +19,26 @@
                  <h4 class="card-title mt-3 text-center">
                         ExposantDetails :
                     </h4>
-                <a th:href="@{/listExposants}" class="btn btn-outline-primary ml-auto">
-                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Liste des exposants
+                <a href="/dashboard" class="btn btn-outline-primary ml-auto">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Dashboard
                 </a>
         </div>
 
+                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                 <i>ID :</i>
-                <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                </div>
-                <span class="form-control" th:text="${exposant.exposantId}"></span>
-            </div>
-
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                        </div>
+                        <span class="form-control" th:text="${user.userId}"></span>
+                    </div>
+                </a>
                 <i>Nom :</i>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                     </div>
-                    <span class="form-control" th:text="${exposant.nom}"></span>
-                </div>
-
-                <i>Pays :</i>
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
-                    </div>
-                    <span class="form-control" th:if="${exposant.pays == null or exposant.pays == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.pays != null and exposant.pays != ''}" th:text="${exposant.pays}"></span>
+                    <span class="form-control" th:text="${user.username}"></span>
                 </div>
 
                 <i>E-mail :</i>
@@ -54,17 +46,27 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                     </div>
-                    <span class="form-control" th:if="${exposant.mail == null or exposant.mail == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.mail != null and exposant.mail != ''}" th:text="${exposant.mail}"></span>
+                    <span class="form-control" th:if="${user.email == null or user.email == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.email != null and user.email != ''}" th:text="${user.email}"></span>
                 </div>
+
+                <i>Pays :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                    </div>
+                    <span class="form-control" th:if="${user.exposant.pays == null or user.exposant.pays == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.pays != null and user.exposant.pays != ''}" th:text="${user.exposant.pays}"></span>
+                </div>
+
 
                 <i>Telephone :</i>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                     </div>
-                    <span class="form-control" th:if="${exposant.telephone == null or exposant.telephone == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.telephone != null and exposant.telephone != ''}" th:text="${exposant.telephone}"></span>
+                    <span class="form-control" th:if="${user.exposant.telephone == null or user.exposant.telephone == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.telephone != null and user.exposant.telephone != ''}" th:text="${user.exposant.telephone}"></span>
                 </div>
 
                 <i>Site Web :</i>
@@ -72,8 +74,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                     </div>
-                    <span class="form-control" th:if="${exposant.siteWeb == null or exposant.siteWeb == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.siteWeb != null and exposant.siteWeb != ''}" th:text="${exposant.siteWeb}"></span>
+                    <span class="form-control" th:if="${user.exposant.siteWeb == null or user.exposant.siteWeb == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.siteWeb != null and user.exposant.siteWeb != ''}" th:text="${user.exposant.siteWeb}"></span>
                 </div>
 
                 <i>Adresse :</i>
@@ -81,8 +83,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                     </div>
-                    <span class="form-control" th:if="${exposant.adresse == null or exposant.adresse == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.adresse != null and exposant.adresse != ''}" th:text="${exposant.adresse}"></span>
+                    <span class="form-control" th:if="${user.exposant.adresse == null or user.exposant.adresse == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.adresse != null and user.exposant.adresse != ''}" th:text="${user.exposant.adresse}"></span>
                 </div>
 
                 <i>Responsable Salle:</i>
@@ -90,8 +92,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                     </div>
-                    <span class="form-control" th:if="${exposant.responsableSalle == null or exposant.responsableSalle == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.responsableSalle != null and exposant.responsableSalle != ''}" th:text="${exposant.responsableSalle}"></span>
+                    <span class="form-control" th:if="${user.exposant.responsableSalle == null or user.exposant.responsableSalle == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.responsableSalle != null and user.exposant.responsableSalle != ''}" th:text="${user.exposant.responsableSalle}"></span>
                 </div>
 
 
@@ -100,8 +102,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                     </div>
-                    <span class="form-control" th:if="${exposant.responsable == null or exposant.responsable == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.responsable != null and exposant.responsable != ''}" th:text="${exposant.responsable}"></span>
+                    <span class="form-control" th:if="${user.exposant.responsable == null or user.exposant.responsable == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.responsable != null and user.exposant.responsable != ''}" th:text="${user.exposant.responsable}"></span>
                 </div>
 
                 <i>Specialite :</i>
@@ -109,8 +111,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                     </div>
-                    <span class="form-control" th:if="${exposant.specialite == null or exposant.specialite == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.specialite != null and exposant.specialite != ''}" th:text="${exposant.specialite}"></span>
+                    <span class="form-control" th:if="${user.exposant.specialite == null or user.exposant.specialite == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.specialite != null and user.exposant.specialite != ''}" th:text="${user.exposant.specialite}"></span>
                 </div>
 
 
@@ -119,8 +121,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                     </div>
-                    <span class="form-control" th:if="${exposant.localisation == null or exposant.localisation == ''}" th:text="Indisponible"></span>
-                    <span class="form-control" th:if="${exposant.localisation != null and exposant.localisation != ''}" th:text="${exposant.localisation}"></span>
+                    <span class="form-control" th:if="${user.exposant.localisation == null or user.exposant.localisation == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.localisation != null and user.exposant.localisation != ''}" th:text="${user.exposant.localisation}"></span>
                 </div>
 
             </div>

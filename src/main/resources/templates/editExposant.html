@@ -18,28 +18,28 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <h4 class="card-title mt-3 text-center">
-                            Editer un exposant :
+                            Editer exposant:
                         </h4>
-                        <a th:href="@{/listExposants}" class="btn btn-outline-primary ml-auto">
-                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Liste des exposants
+                        <a th:href="@{/dashboard}" class="btn btn-outline-primary ml-auto">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Dashboard
                         </a>
                     </div>
 
-                    <i>ID :</i>
+
+                    <i>Nom d'utilisateur :</i>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input id="id" class="form-control" type="hidden" name="exposantId" th:value="${exposant.exposantId}">
-                        <input class="form-control" type="text" value="" th:value="${exposant.exposantId}" readonly>
+                        <input id="newUsername" class="form-control" type="text" name="newUsername" th:value="${exposant.user.username}">
                     </div>
 
-                    <i>Nom : (*) Ce champ ne doit pas être vide</i> <span class="text-danger" th:errors="${exposant.nom}"></span>
+                    <i>Email :</i>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                         </div>
-                        <input id="nom" class="form-control" type="text" name="nom" th:value="${exposant.nom}">
+                        <input id="email" class="form-control" type="email" name="email" th:value="${exposant.user?.email}" readonly>
                     </div>
 
                     <i>Pays :</i>
@@ -47,25 +47,18 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-map"></i> </span>
                         </div>
-                        <input id="pays" class="form-control" type="text" name="pays" th:value="${exposant.pays}">
+                        <input id="pays" class="form-control" type="text" name="pays" th:value="${exposant.pays}" placeholder="Indisponible">
                         <span class="text-danger" th:errors="${exposant.pays}"></span>
                     </div>
 
-                    <i>E-mail :</i>
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
-                        </div>
-                        <input id="mail" class="form-control" type="email" name="mail" th:value="${exposant.mail}">
-                        <span class="text-danger" th:errors="${exposant.mail}"></span>
-                    </div>
+
 
                     <i>Telephone :</i>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                         </div>
-                        <input id="telephone"  class="form-control" type="number" name="telephone" th:value="${exposant.telephone}">
+                        <input id="telephone"  class="form-control" type="text" name="telephone" th:value="${exposant.telephone}" placeholder="Indisponible">
                         <span class="text-danger" th:errors="${exposant.telephone}"></span>
                     </div>
 
@@ -74,7 +67,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-globe"></i> </span>
                         </div>
-                        <input id="siteWeb"  class="form-control" type="text" name="siteWeb" th:value="${exposant.siteWeb}">
+                        <input id="siteWeb"  class="form-control" type="text" name="siteWeb" th:value="${exposant.siteWeb}" placeholder="Indisponible">
                         <span class="text-danger" th:errors="${exposant.siteWeb}"></span>
                     </div>
 
@@ -83,7 +76,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-home"></i> </span>
                         </div>
-                        <input  id="adresse" class="form-control" type="text" name="adresse" th:value="${exposant.adresse}">
+                        <input  id="adresse" class="form-control" type="text" name="adresse" th:value="${exposant.adresse}" placeholder="Indisponible">
                         <span class="text-danger" th:errors="${exposant.adresse}"></span>
                     </div>
 
@@ -92,7 +85,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-street-view" aria-hidden="true"></i> </span>
                         </div>
-                        <input  id="responsableSalle" class="form-control" type="text" name="responsableSalle" th:value="${exposant.responsableSalle}">
+                        <input  id="responsableSalle" class="form-control" type="text" name="responsableSalle" th:value="${exposant.responsableSalle}" placeholder="Indisponible">
                         <span class="text-danger" th:errors="${exposant.responsableSalle}"></span>
                     </div>
 
@@ -101,7 +94,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input  id="responsable" class="form-control" type="text" name="responsable" th:value="${exposant.responsable}">
+                        <input  id="responsable" class="form-control" type="text" name="responsable" th:value="${exposant.responsable}" placeholder="Indisponible">
                         <span class="text-danger" th:errors="${exposant.responsable}"></span>
                     </div>
 
@@ -111,18 +104,21 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-bars"></i> </span>
                         </div>
-                        <input  id="specialite" class="form-control" type="text" name="specialite" th:value="${exposant.specialite}">
+                        <input  id="specialite" class="form-control" type="text" name="specialite" th:value="${exposant.specialite}" placeholder="Indisponible">
                         <span class="text-danger" th:errors="${exposant.specialite}"></span>
                     </div>
+
 
                     <i>Localisation :</i>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
                         </div>
-                        <input  id="localisation" class="form-control" type="text" name="localisation" th:value="${exposant.localisation}">
-                        <span class="text-danger" th:errors="${exposant.localisation}"></span>
+                        <input id="localisation" class="form-control" type="text" name="localisation" th:value="${exposant.localisation}" readonly>
                     </div>
+
+                    <input id="id" class="form-control" type="hidden" name="exposantId" th:value="${exposant.exposantId}">
+
 
                     <div class="d-flex justify-content-center align-items-center">
                         <button id="saveButton" class="btn btn-outline-success" type="submit" disabled>
@@ -132,16 +128,16 @@
 
                     <script>
                         // Enable the "Save" button when the "Titre" field has valid value
-                        const titreInput = document.querySelector('[name="nom"]');
+                        const usernameInput = document.querySelector('[name="newUsername"]');
                         const saveButton = document.getElementById('saveButton');
 
                         // Check the input value initially and disable/enable the button accordingly
                         toggleSaveButtonState();
 
-                        titreInput.addEventListener('input', toggleSaveButtonState);
+                        usernameInput.addEventListener('input', toggleSaveButtonState);
 
                         function toggleSaveButtonState() {
-                            if (titreInput.value.trim() !== "") {
+                            if (usernameInput.value.trim() !== "") {
                                 saveButton.removeAttribute('disabled');
                             } else {
                                 saveButton.setAttribute('disabled', 'disabled');

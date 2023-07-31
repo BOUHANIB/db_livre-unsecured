@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link crossorigin="anonymous"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+  <link rel="stylesheet"/>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <title>Register</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+<div class="container-fluid background">
+  <div class="container d-flex justify-content-center" id="centre">
+    <div class="row shadow-inner">
+      <form action="" method="POST" onsubmit="return validate();" th:action="@{/register}" th:object="${user}">
+        <div class="form-group">
+          <fieldset>
+            <table class="table caption-top form-table">
+              <caption><h3>Register</h3></caption>
+              <div class="row>">
+                <tr>
+                  <th>
+                    <label for="email">Email*:</label>
+                  </th>
+                  <td>
+                    <input id="email" required th:field="*{email}" type="email"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="username">Username:</label>
+                  </th>
+                  <td>
+                    <input id="username" required th:field="*{username}" type="text"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="password">Password:</label>
+                  </th>
+                  <td>
+                    <input id="password" required th:field="*{password}" type="password"/>
+                  </td>
+                </tr>
+                <tr>
+                  <th>
+                    <label for="confirm-password">Confirm Password:</label>
+                  </th>
+                  <td>
+                    <input id="confirm-password" required type="password"/>
+                  </td>
+                </tr>
+              </div>
+              <div class="row>">
+                <tr>
+                  <th>
+                    <button class="btn btn-success" id="submit-btn" type="submit">Register</button>
+                  </th>
+                  <td class="error-message" id="form-message">
+                    <div class="error-message" th:text="${userExists}"></div>
+                    <div class="error-message" th:text="${emailExists}"></div>
+                    <div class="error-message" th:text="${badPassword}"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Already registered?</th>
+                  <td>
+                    <div class="row">
+                      <button class="btn btn-link" onclick="window.location.href='/login';">
+                        Login
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </div>
+            </table>
+
+          </fieldset>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+
+</body>
+</html>

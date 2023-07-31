@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link crossorigin="anonymous"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+  <link rel="stylesheet"/>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+  <div>
+  <div>
+    <div class="row">
+      <div class="col" th:if="${isLoggedIn == true}">
+        <h3>Welcome back</h3>
+      </div>
+      <div class="col-auto" th:if="${isLoggedIn == true}">
+        <h4><a href="/dashboard">Go to Dashboard</a></h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col" th:if="${param.logout != null}">
+        <h4>Log out successful</h4>
+      </div>
+      <div class="col-auto" th:if="${param.logout != null}">
+        <h4><a href="/login">Log back in?</a></h4>
+      </div>
+    </div>
+  </div>
+
+    <nav class="p-5">
+
+      <div class="container">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+          <h3 style="text-align: center;">Explorez le monde du savoir avec notre application  !!!</h3>
+          <div class="text-block">
+            <p>
+              Bienvenue au Salon du Livre ! Notre application mobile est conçue pour être votre guide ultime lors
+              de cet événement littéraire passionnant. Découvrez toutes les informations essentielles sur les
+              auteurs, les séances de dédicaces, les conférences et les nouveautés littéraires.
+              <br>
+              Plan interactif : Naviguez facilement dans le salon grâce à notre plan interactif.
+              Trouvez les stands de vos auteurs préférés et les différents espaces thématiques.
+              <br>
+              <br>
+              Programme complet : Consultez le programme complet du salon avec les horaires des dédicaces,
+              des conférences et des ateliers. Ajoutez vos événements préférés à votre agenda personnalisé.
+              <br>
+              Découvrez les auteurs : Parcourez la liste complète des auteurs présents au salon. Consultez leur
+              biographie et les livres qu'ils présenteront.
+              <br>
+              Réservez vos places : Pour les conférences et les ateliers à capacité limitée, réservez vos
+              places directement depuis l'application pour ne rien manquer.
+              <br>
+              <br>
+              Notifications en temps réel : Recevez des notifications en temps réel pour les événements
+              spéciaux, les changements de programme et les offres spéciales du salon.
+              <br>
+              <br>
+              Partagez vos moments : Prenez des photos et partagez vos meilleurs moments du salon avec notre
+              fonction de partage intégrée.
+              <br>
+              Téléchargez dès maintenant notre application mobile et préparez-vous à vivre une expérience
+              inoubliable au Salon du Livre !
+            </p>
+            <br>
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="text-block">
+
+              <p>Pour plus d'information visitez notre site web:
+                <a href="https://siel.ma/fr/accueil/" target="_blank">SIEL.ma</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </nav>
+  </div>
+</div>
+
+
+</body>
+</html>
