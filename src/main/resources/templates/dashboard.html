@@ -26,58 +26,80 @@
                                 <h3>Mes informations :</h3>
                             </div>
 
-                            <a th:href="@{/formLivres}" class="btn btn-outline-primary ml-auto">
+                            <a th:href="@{/formLivres/{idExposant}(idExposant=${user.exposant.exposantId})}" class="btn btn-outline-primary">
                                 <i class="fa fa-plus"></i> Ajouter un livre
                             </a>
                         </div>
 
                         <br>
 
+
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                                    <th>ID</th>
-                                    </a>
-                                    <th>Nom</th>
+
+                                    <th>Nom d'utilisateur</th>
                                     <th>Email</th>
-                                    <th>Pays</th>
-                                    <th>Spécialité</th>
-                                    <th>Localisation</th>
+
+                                    <a th:if="${#authorization.expression('hasRole(''USER'')')}">
+                                    <th>Nom d'exposant</th>
+                                    </a>
+                                    <th>Telephone</th>
+                                    <a th:if="${#authorization.expression('hasRole(''USER'')')}">
+                                        <th>Localisation</th>
+                                    </a>
                                     <th style="text-align: center;">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                                        <th>ID</th>
-                                    </a>
+
                                     <td th:text="${user.username}"></td>
                                     <td th:text="${user.email}"></td>
 
+                                    <a th:if="${#authorization.expression('hasRole(''USER'')')}">
                                     <td>
-                                        <span th:if="${user.exposant.pays} != null" th:text="${user.exposant.pays}"></span>
-                                        <span th:unless="${user.exposant.pays}">Indisponible</span>
+                                        <span th:if="${user.exposant.nom} != null" th:text="${user.exposant.nom}"></span>
+                                        <span th:unless="${user.exposant.nom}">Indisponible</span>
                                     </td>
+                                    </a>
 
-                                    <td>
-                                        <span th:if="${user.exposant.specialite} != null" th:text="${user.exposant.specialite}"></span>
-                                        <span th:unless="${user.exposant.specialite}">Indisponible</span>
-                                    </td>
+                                     <td>
+                                            <span th:if="${user.telephone} != null" th:text="${user.telephone}"></span>
+                                            <span th:unless="${user.telephone}">Indisponible</span>
+                                     </td>
+
+                                    <a th:if="${#authorization.expression('hasRole(''USER'')')}">
                                     <td>
                                         <span th:if="${user.exposant.localisation} != null" th:text="${user.exposant.localisation}"></span>
                                         <span th:unless="${user.exposant.localisation}">Indisponible</span>
                                     </td>
-
+                                    </a>
                                     <td style="text-align: center;">
 
+                                        <a th:if="${#authorization.expression('hasRole(''USER'')')}">
                                         <a th:href="@{/exposantdetails/{id}(id=${user.userId})}" class="btn btn-outline-warning">
                                             <i class="fa fa-bars"></i>
                                         </a>
+                                        </a>
 
-                                        <a th:href="@{/editExposant(id=${user.userId}, keyword=${keyword}, page=${currentPage})}" class="btn btn-outline-secondary">
+                                        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                                            <a th:href="@{/admindetails/{id}(id=${user.userId})}" class="btn btn-outline-warning">
+                                                <i class="fa fa-bars"></i>
+                                            </a>
+                                        </a>
+
+                                        <a th:if="${#authorization.expression('hasRole(''USER'')')}">
+                                        <a th:href="@{/editExposant(id=${user.userId})}" class="btn btn-outline-secondary">
                                             <i class="fa fa-pencil"></i>
+                                        </a>
+                                        </a>
+
+                                        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                                        <a th:href="@{/editAdmin(id=${user.userId})}" class="btn btn-outline-secondary">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
                                         </a>
                                     </td>
                                 </tr>

@@ -16,29 +16,37 @@
         <div class="card">
             <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
-                 <h4 class="card-title mt-3 text-center">
+
+
+                <a th:if="${#authorization.expression('hasRole(''USER'')')}">
+                <h4 class="card-title mt-3 text-center">
                         ExposantDetails :
                     </h4>
+                </a>
+
                 <a href="/dashboard" class="btn btn-outline-primary ml-auto">
                     <i class="fa fa-arrow-left" aria-hidden="true"></i> Dashboard
                 </a>
         </div>
 
-                <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                <i>ID :</i>
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                        </div>
-                        <span class="form-control" th:text="${user.userId}"></span>
-                    </div>
-                </a>
+                        <span class="form-control" th:text="${user.userId}" hidden></span>
+
+
                 <i>Nom :</i>
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                     </div>
                     <span class="form-control" th:text="${user.username}"></span>
+                </div>
+
+                <i>mail :</i>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
+                    </div>
+                    <span class="form-control" th:if="${user.exposant.mail == null or user.exposant.mail == ''}" th:text="Indisponible"></span>
+                    <span class="form-control" th:if="${user.exposant.mail != null and user.exposant.mail != ''}" th:text="${user.exposant.mail}"></span>
                 </div>
 
                 <i>E-mail :</i>

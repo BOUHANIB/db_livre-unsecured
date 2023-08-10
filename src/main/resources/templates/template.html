@@ -24,28 +24,54 @@
     </div>
     <hr>
     <a class="w3-bar-item w3-button" href="/home"><i class="fa fa-building fa-2x"></i>Home</a>
-    <hr>
 
-    <div th:if="${isLoggedIn == true}">
+    <div th:if="${#authorization.expression('hasRole(''USER'')')}">
+        <hr>
         <a class="w3-bar-item w3-button" href="/dashboard"><i class="fa fa-building fa-2x"></i>Dashboard</a>
+        <hr>
     </div>
-    <br>
-    <hr>
-    <a th:href="@{/listExposants}" class="w3-bar-item w3-button"><i class="fa fa-building fa-2x"></i> Expoasnts</a>
-    <hr>
-    <a th:href="@{/listLivres}" class="w3-bar-item w3-button"><i class="fa fa-book fa-2x" aria-hidden="true"></i> Livres</a>
-    <hr>
-    <a th:href="@{/map}" class="w3-bar-item w3-button"><i class="fa fa-book fa-2x" aria-hidden="true"></i> Carte</a>
-    <hr>
-    <div th:if="${isLoggedIn != true}">
+
+    <div th:if="${#authorization.expression('hasRole(''USER'')')}">
+        <a th:href="@{'/mesLivres/' + ${#authentication.principal.userId}}" class="w3-bar-item w3-button">
+            <i class="fa fa-building fa-2x"></i> Mes livres</a>
+        <hr>
+    </div>
+
+    <div th:if="${#authorization.expression('hasRole(''USER'')')}">
+        <a th:href="@{/map}" class="w3-bar-item w3-button"><i class="fa fa-book fa-2x" aria-hidden="true"></i> Carte</a>
+        <hr>
+    </div>
+
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <hr>
+        <a class="w3-bar-item w3-button" href="/dashboard"><i class="fa fa-building fa-2x"></i>Dashboard</a>
+        <hr>
+    </div>
+
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a th:href="@{/listExposants}" class="w3-bar-item w3-button"><i class="fa fa-building fa-2x"></i> Expoasnts</a>
+        <hr>
+    </div>
+
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a th:href="@{/listLivres}" class="w3-bar-item w3-button"><i class="fa fa-book fa-2x" aria-hidden="true"></i>
+            Livres</a>
+        <hr>
+    </div>
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a th:href="@{/map}" class="w3-bar-item w3-button"><i class="fa fa-book fa-2x" aria-hidden="true"></i> Map</a>
+        <hr>
+    </div>
+
+    <div th:if="${!#authorization.expression('hasRole(''ADMIN'')') && !#authorization.expression('hasRole(''USER'')')}">
+        <hr>
         <a class="w3-bar-item w3-button" href="/register"><i class="fa fa-building fa-2x"></i>Register</a>
     </div>
-    <hr>
-    <div th:if="${isLoggedIn != true}">
+    <div th:if="${!#authorization.expression('hasRole(''ADMIN'')') && !#authorization.expression('hasRole(''USER'')')}">
+        <hr>
         <a class="w3-bar-item w3-button" href="/login"><i class="fa fa-building fa-2x"></i>Login</a>
     </div>
-    <hr>
-    <div th:if="${isLoggedIn == true}">
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')') or #authorization.expression('hasRole(''USER'')')}">
         <a class="w3-bar-item w3-button" href="/confirm_logout"><i class="fa fa-building fa-2x"></i>Logout</a>
     </div>
     <hr>

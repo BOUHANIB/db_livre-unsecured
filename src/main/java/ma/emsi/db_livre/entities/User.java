@@ -2,15 +2,15 @@ package ma.emsi.db_livre.entities;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -23,6 +23,10 @@ public class User {
     private String username;
     @Column(nullable = false, unique = true)
     private String email;
+
+    private String telephone;
+
+
     @Column(nullable = false)
     private String password;
     @OneToMany(fetch = FetchType.LAZY,
@@ -42,6 +46,7 @@ public class User {
                 " userId= " + userId +
                 ", username= '" + username + '\'' +
                 ", email= '" + email + '\'' +
+                ", telephone= '" + telephone + '\'' +
                 ", lastLogout= " + lastLogout;
     }
 

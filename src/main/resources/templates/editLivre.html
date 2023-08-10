@@ -48,7 +48,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-map"></i> </span>
                         </div>
-                        <input id="auteur" class="form-control" type="text" name="auteur" th:value="${livre.auteur}">
+                        <input id="auteur" class="form-control" type="text" name="auteur" th:value="${livre.auteur}" th:placeholder="${livre.auteur == null or livre.auteur == '' ? 'Indisponible' : ''}">
                         <span class="text-danger" th:errors="${livre.auteur}"></span>
                     </div>
 
@@ -57,7 +57,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-address-book"></i> </span>
                         </div>
-                        <input id="editeur" class="form-control" type="text" name="editeur" th:value="${livre.editeur}">
+                        <input id="editeur" class="form-control" type="text" name="editeur" th:value="${livre.editeur}" th:placeholder="${livre.editeur == null or livre.editeur == '' ? 'Indisponible' : ''}">
                         <span class="text-danger" th:errors="${livre.editeur}"></span>
                     </div>
 
@@ -66,7 +66,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                         </div>
-                        <input id="dateEdition"  class="form-control" type="date" name="dateEdition" th:value="${livre.dateEdition}">
+                        <input id="dateEdition" class="form-control" type="date" name="dateEdition" th:value="${livre.dateEdition}" th:placeholder="${livre.dateEdition == null or livre.dateEdition == '' ? 'Indisponible' : ''}">
                         <span class="text-danger" th:errors="${livre.dateEdition}"></span>
                     </div>
 
@@ -75,7 +75,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-globe"></i> </span>
                         </div>
-                        <input id="prix"  class="form-control" type="number" name="prix" th:value="${livre.prix}">
+                        <input id="prix" class="form-control" type="number" name="prix" th:value="${livre.prix}" th:placeholder="${livre.prix == null ? 'Indisponible' : ''}">
                         <span class="text-danger" th:errors="${livre.prix}"></span>
                     </div>
 
@@ -84,7 +84,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-home"></i> </span>
                         </div>
-                        <input  id="isbn" class="form-control" type="text" name="isbn" th:value="${livre.isbn}">
+                        <input id="isbn" class="form-control" type="text" name="isbn" th:value="${livre.isbn}" th:placeholder="${livre.isbn == null or livre.isbn == '' ? 'Indisponible' : ''}">
                         <span class="text-danger" th:errors="${livre.isbn}"></span>
                     </div>
 

@@ -14,9 +14,10 @@
 <nav class="p-3">
     <nav class="container">
         <div class="card">
-            <form method="post" th:action="@{saveExposant(page=${page},keyword=${keyword})}">
+            <form method="post" th:action="@{saveExposant}">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
+
                         <h4 class="card-title mt-3 text-center">
                             Editer exposant:
                         </h4>
@@ -26,12 +27,23 @@
                     </div>
 
 
-                    <i>Nom d'utilisateur :</i>
+                    <i>Nom d'exposant :</i>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                         </div>
-                        <input id="newUsername" class="form-control" type="text" name="newUsername" th:value="${exposant.user.username}">
+                        <input id="nom" class="form-control" type="text" name="nom"
+                               th:value="${exposant?.nom}" placeholder="Indisponible">
+                        <span class="text-danger" th:errors="${exposant.nom}"></span>
+                    </div>
+
+                    <i>Mail :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-map"></i> </span>
+                        </div>
+                        <input id="mail" class="form-control" type="text" name="mail" th:value="${exposant.mail}" placeholder="Indisponible">
+                        <span class="text-danger" th:errors="${exposant.mail}"></span>
                     </div>
 
                     <i>Email :</i>
@@ -42,6 +54,16 @@
                         <input id="email" class="form-control" type="email" name="email" th:value="${exposant.user?.email}" readonly>
                     </div>
 
+                        <i>Telephone :</i>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                            </div>
+                            <input id="tel"  class="form-control" type="number" name="telephone" th:value="${exposant.telephone}" placeholder="Indisponible">
+                            <span class="text-danger" th:errors="${exposant.telephone}"></span>
+                        </div>
+
+
                     <i>Pays :</i>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
@@ -51,16 +73,6 @@
                         <span class="text-danger" th:errors="${exposant.pays}"></span>
                     </div>
 
-
-
-                    <i>Telephone :</i>
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                        </div>
-                        <input id="telephone"  class="form-control" type="text" name="telephone" th:value="${exposant.telephone}" placeholder="Indisponible">
-                        <span class="text-danger" th:errors="${exposant.telephone}"></span>
-                    </div>
 
                     <i>Site Web:</i>
                     <div class="form-group input-group">
@@ -108,7 +120,6 @@
                         <span class="text-danger" th:errors="${exposant.specialite}"></span>
                     </div>
 
-
                     <i>Localisation :</i>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
@@ -128,7 +139,7 @@
 
                     <script>
                         // Enable the "Save" button when the "Titre" field has valid value
-                        const usernameInput = document.querySelector('[name="newUsername"]');
+                        const usernameInput = document.querySelector('[name="nom"]');
                         const saveButton = document.getElementById('saveButton');
 
                         // Check the input value initially and disable/enable the button accordingly

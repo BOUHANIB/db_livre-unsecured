@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Exposant</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+</head>
+<body>
+<nav class="p-3">
+    <nav class="container">
+        <div class="card">
+            <form method="post" th:action="@{saveAdmin}">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                            <h4 class="card-title mt-3 text-center">
+                                Editer Profil:
+                            </h4>
+                        </a>
+
+                        <a th:href="@{/dashboard}" class="btn btn-outline-primary ml-auto">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i> Dashboard
+                        </a>
+                    </div>
+
+
+                    <i>Nom d'utilisateur :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        </div>
+                        <input id="userName" class="form-control" type="text" name="username" th:value="${user.username}">
+                    </div>
+
+                    <i>Email :</i>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                        </div>
+                        <input id="email" class="form-control" type="email" name="email" th:value="${user.email}" readonly>
+                    </div>
+
+
+                        <i>Telephone :</i>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                            </div>
+                            <input id="tel"  class="form-control" type="number" name="telephone" th:value="${user.telephone}" placeholder="Indisponible">
+                            <span class="text-danger" th:errors="${user.telephone}"></span>
+                        </div>
+
+
+
+                    <input id="id" class="form-control" type="hidden" name="userId" th:value="${user.userId}">
+
+
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button id="saveButton" class="btn btn-outline-success" type="submit" disabled>
+                            Update
+                        </button>
+                    </div>
+
+                    <script>
+                        // Enable the "Save" button when the "Titre" field has valid value
+                        const usernameInput = document.querySelector('[name="username"]');
+                        const saveButton = document.getElementById('saveButton');
+
+                        // Check the input value initially and disable/enable the button accordingly
+                        toggleSaveButtonState();
+
+                        usernameInput.addEventListener('input', toggleSaveButtonState);
+
+                        function toggleSaveButtonState() {
+                            if (usernameInput.value.trim() !== "") {
+                                saveButton.removeAttribute('disabled');
+                            } else {
+                                saveButton.setAttribute('disabled', 'disabled');
+                            }
+                        }
+                    </script>
+
+                </div>
+            </form>
+        </div>
+    </nav>
+</nav>
+
+</body>
+</html>

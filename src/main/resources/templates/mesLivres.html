@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template.html">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link crossorigin="anonymous"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+  <link rel="stylesheet"/>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <nav class="p-3">
+    <nav class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <h3>Mes Livres :</h3>
+            </div>
+          </div>
+
+          <br>
+
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Editeur</th>
+                <th style="text-align: center;">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <!-- Utiliser Thymeleaf pour parcourir la liste des livres et les afficher -->
+              <tr th:each="livre : ${mesLivres}">
+                <!-- Remplacer "livre." par les vrais noms d'attributs de votre classe Livre -->
+                <td>
+                  <span th:if="${livre.titre} != null" th:text="${livre.titre}"></span>
+                  <span th:unless="${livre.titre}">Indisponible</span>
+                </td>
+                <td>
+                  <span th:if="${livre.auteur} != null" th:text="${livre.auteur}"></span>
+                  <span th:unless="${livre.auteur}">Indisponible</span>
+                </td>
+                <td>
+                  <span th:if="${livre.editeur} != null" th:text="${livre.editeur}"></span>
+                  <span th:unless="${livre.editeur}">Indisponible</span>
+                </td>
+
+                <!-- Ajouter les boutons d'action pour éditer et supprimer le livre -->
+                <td style="text-align: center;">
+                  <a th:href="@{/mesLivresdetails(id=${livre.livreId})}" class="btn btn-outline-warning">
+                    <i class="fa fa-bars"></i>
+                  </a>
+                  <a th:href="@{/editMesLivres(id=${livre.livreId})}" class="btn btn-outline-secondary">
+                    <i class="fa fa-pencil"></i>
+                  </a>
+                  <a onclick="return confirm('Etes vous sûre?')" class="btn btn-outline-danger"
+                     th:href="@{/deleteMesLivres(id=${livre.livreId})}">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </nav>
+</div>
+
+</body>
+</html>

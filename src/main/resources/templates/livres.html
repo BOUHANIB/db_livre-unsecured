@@ -67,10 +67,8 @@
                                 <span th:if="${livre.editeur} != null" th:text="${livre.editeur}"></span>
                                 <span th:unless="${livre.editeur}">Indisponible</span>
                             </td>
-                            <td>
-                                <span th:if="${livre.exposant != null}" th:text="${livre.exposant.nom}"></span>
-                                <span th:unless="${livre.exposant}">Indisponible</span>
-                            </td>
+                            <td th:text="${livre.exposant.nom}"></td>
+
                             <td style="text-align: center;">
                                 <a th:href="@{/livredetails(id=${livre.livreId})}" class="btn btn-outline-warning">
                                     <i class="fa fa-bars"></i>

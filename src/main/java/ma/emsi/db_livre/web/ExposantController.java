@@ -33,6 +33,9 @@ public class ExposantController {
 
         for (Exposant exposant : exposants) {
 
+            if (exposant.getNom() == null || exposant.getNom().isEmpty()) {
+                exposant.setNom("Indisponible");
+            }
             if (exposant.getPays() == null || exposant.getPays().isEmpty()) {
                 exposant.setPays("Indisponible");
             }
@@ -67,9 +70,9 @@ public class ExposantController {
     }
 
     @GetMapping("/deleteExposant")
-    public String deleteExposant(@RequestParam(name = "id") Long id, String keyword, int page){
+    public String deleteExposant(@RequestParam(name = "id") Long id){
         exposantRepository.deleteById(id);
-        return "redirect:/listExposants?page="+page+"&keyword="+keyword;
+        return "redirect:/listExposants";
     }
 
     @GetMapping("/exposantdetails/{id}")
@@ -96,10 +99,7 @@ public class ExposantController {
     }
 
     @PostMapping("/saveExposant")
-    public String saveExposant(Model model, @Valid Exposant exposant, BindingResult bindingResult,
-                               @RequestParam(defaultValue = "0") String page,
-                               @RequestParam(defaultValue = "") String keyword,
-                               @RequestParam(name = "newUsername", required = false) String newUsername) {
+    public String saveExposant(@Valid Exposant exposant, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "formExposants";
@@ -111,17 +111,14 @@ public class ExposantController {
             throw new RuntimeException("Exposant not found");
         }
 
-        // Check if newUsername is provided and not empty
-        if (newUsername != null && !newUsername.trim().isEmpty()) {
-            // Set the new username in the associated User entity (if exists)
-            User user = existingExposant.getUser();
-            if (user != null) {
-                user.setUsername(newUsername.trim());
-            }
+
+        if (exposant.getUser() != null) {
+            existingExposant.setNom(exposant.getUser().getUsername());
         }
 
         // Update the fields of the existing Exposant with the new values
-        existingExposant.setNom(exposant.getNom());
+        existingExposant.setNom(exposant.getNom().isEmpty() ? null : exposant.getNom());
+        existingExposant.setMail(exposant.getMail().isEmpty() ? null : exposant.getMail());
         existingExposant.setPays(exposant.getPays().isEmpty() ? null : exposant.getPays());
         existingExposant.setTelephone(exposant.getTelephone().isEmpty() ? null : exposant.getTelephone());
         existingExposant.setSiteWeb(exposant.getSiteWeb().isEmpty() ? null : exposant.getSiteWeb());
@@ -135,24 +132,19 @@ public class ExposantController {
         // Save the updated Exposant (including the User relationship) to the database
         exposantRepository.save(existingExposant);
 
-        // Convert the page number from String to int
-        int pageNumber = Integer.parseInt(page);
-
         // Redirect to the dashboard page after saving the changes
         return "redirect:/dashboard";
     }
 
 
     @GetMapping("/editExposant")
-    public String editExposant(Long id, Model model, String keyword, String page){ // Modifier le type en String
+    public String editExposant(Long id, Model model){ // Modifier le type en String
         Exposant exposant = exposantRepository.findById(id).orElse(null);
         if (exposant == null) throw new RuntimeException("Exposant introuvable");
 
         String currentUsername = exposant.getUser() != null ? exposant.getUser().getUsername() : "";
 
         model.addAttribute("exposant", exposant);
-        model.addAttribute("page", page);
-        model.addAttribute("keyword", keyword);
         model.addAttribute("currentUsername", currentUsername); // Add the current username to the model
 
 

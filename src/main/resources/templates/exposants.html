@@ -47,6 +47,7 @@
                         <th>ID</th>
                         <th>Nom</th>
                         <th>Pays</th>
+                        <th>mail</th>
                         <th>Email</th>
                         <th>Specialite</th>
                         <th>Localisation</th>
@@ -72,6 +73,10 @@
                             <span th:unless="${exposant.mail}">Indisponible</span>
                         </td>
                         <td>
+                            <span th:if="${exposant.user.email} != null" th:text="${exposant.user.email}"></span>
+                            <span th:unless="${exposant.user.email}">Indisponible</span>
+                        </td>
+                        <td>
                             <span th:if="${exposant.specialite} != null" th:text="${exposant.specialite}"></span>
                             <span th:unless="${exposant.specialite}">Indisponible</span>
                         </td>
@@ -81,11 +86,11 @@
                         </td>
 
                         <td style="text-align: center;">
-                            <a th:href="@{/exposantdetails/{id}(id=${user.exposant.exposantId})}" class="btn btn-outline-warning">
+                            <a th:href="@{/exposantdetails/{id}(id=${exposant.exposantId})}" class="btn btn-outline-warning">
                                 <i class="fa fa-bars"></i>
                             </a>
                             <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-                            <a th:href="@{/editExposant(id=${user.exposant.exposantId}, keyword=${keyword}, page=${currentPage})}" class="btn btn-outline-secondary">
+                            <a th:href="@{/editExposant(id=${exposant.exposantId}, keyword=${keyword}, page=${currentPage})}" class="btn btn-outline-secondary">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             </a>
